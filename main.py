@@ -26,35 +26,16 @@ driver = webdriver.Chrome()
 
 element_dict = {}
 
-
-def log_time(start_time: float, function_name: str) -> None:
-    """Logs the time taken by a function."""
-    end_time = time.time()
-    print(f"{function_name} took {end_time - start_time:.4f} seconds")
-
-
 def switch_to_iframe(iframe_index: int = 0) -> None:
     """Switches to the iframe based on the provided index (defaults to 0 for the first iframe)."""
     iframes = driver.find_elements(By.TAG_NAME, 'iframe')
     if len(iframes) > iframe_index:
         driver.switch_to.frame(iframes[iframe_index])
 
-
 def switch_to_default_content() -> None:
     """Switches back to the main document from the iframe."""
     driver.switch_to.default_content()
 
-
-def get_element_xpath(element) -> str:
-    """Generate a unique XPath for an element."""
-    components = []
-    while element.tag_name != 'html':  # Traverse up the DOM tree
-        siblings = element.find_elements(By.XPATH, f"preceding-sibling::{element.tag_name}")
-        index = len(siblings) + 1
-        component = f"{element.tag_name}[{index}]"
-        components.append(component)
-        element = element.find_element(By.XPATH, "..")  # Move to parent element
-    return "/html/" + "/".join(components[::-1])  # Reverse components and join to form XPath
 
 def extract_elements_from_frame(context: webdriver.Chrome, frame_id: int = -1) -> tuple:
     """Extracts visible elements using fast JavaScript traversal but retains Selenium elements in element_dict."""
