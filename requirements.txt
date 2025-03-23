@@ -1,0 +1,8 @@
+langchain
+langchain_openai
+langchain_community==0.2.13
+langchain_experimental
+langchain_tools
+langchain_core
+selenium
+python-dotenv
